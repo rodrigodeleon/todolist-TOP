@@ -1,0 +1,20 @@
+#content {
+}
+
+.project{
+    display: flex;
+    flex-direction: column;
+}
+ul {
+    display: flex;
+    width: fit-content;
+    list-style: none;
+}
+li {
+    padding: 1rem;
+    border-right: 1px solid #ccc;
+  }
+  
+li:last-child {
+    border-right: none; 
+  }

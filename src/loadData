@@ -3,20 +3,21 @@ import Project from "./project";
 import ToDo from "./toDo";
 
 function populateData() {
+  //create projects/todos and loads them on localStorage
   let projects = [];
   let todos = [];
 
   const actions = [
-    "do dishes",
-    "paint house",
-    "brush teeth",
-    "drive kids",
-    "do groceries",
-    "clean sheets",
+    "Do dishes",
+    "Paint house",
+    "Brush teeth",
+    "Drive kids",
+    "Do groceries",
+    "Clean sheets",
   ];
 
   actions.forEach((element) => {
-    for (let index = 0; index < 3; index++) {
+    for (let index = 0; index < 2; index++) {
       const mytodo = new ToDo(
         element,
         element,
@@ -37,31 +38,34 @@ function populateData() {
   });
 
   localStorage.setItem("projects", JSON.stringify(projects));
-  // localStorage.setItem("todos", JSON.stringify(todos));
 }
 
 export function loadAllProjects() {
-  
   populateData();
   const projects = JSON.parse(localStorage.getItem("projects"));
   const projectList = document.createElement("ul");
+  projectList.classList.add("project");
   projects.forEach((project) => {
+    const projectDiv = document.createElement("div");
     const todolist = document.createElement("ul");
     const projName = document.createElement("li");
     projName.textContent = project.name;
     projName.classList.add("projName");
-    projectList.appendChild(projName);
+    projectDiv.appendChild(projName);
+    var myarray = project["toDoList"];
     project["toDoList"].forEach((element) => {
       const todo = document.createElement("li");
-      todo.textContent = element.title + " Date: " + element.dueDate;
+      todo.textContent = element.title.toUpperCase() + " Due Date: " + element.dueDate;
       todolist.append(todo);
     });
-    projectList.appendChild(todolist);
+    projectDiv.appendChild(todolist);
+    projectList.appendChild(projectDiv);
   });
   return projectList;
   //returns an ul with all projects and todos
 }
 
+// projectList.sort((a, b) => a.dueDate - b.dueDate);
 
 function randomDate(start, end) {
   return new Date(
