@@ -4,7 +4,7 @@ export default class Project {
     this.toDoList = [];
   }
 
-  getToDoList() {
+   getToDoList() {
     return this.toDoList;
   }
 
@@ -12,12 +12,7 @@ export default class Project {
     this.toDoList.push(toDo);
   }
 
-  deleteToDo(toDoToDelete) {
-    this.toDoList.forEach((toDo) => {
-      if (toDo.title == toDoToDelete.title) {
-        let index = this.toDoList.indexOf(toDo);
-        this.toDoList.splice(index, 1);
-      }
-    });
+  deleteToDo(toDoToDeleteIndex) {
+    this.toDoList.splice(toDoToDeleteIndex, 1);
   }
 }

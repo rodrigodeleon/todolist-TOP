@@ -1,17 +1,23 @@
-import {format} from 'date-fns';
-import Project from './project';
-import ToDo from './toDo';
+import { format } from "date-fns";
+import { populateData } from "./loadData";
 
-const date = new Date (1990,5,12);
+populateData();
+const projects = JSON.parse(localStorage.getItem("projects"));
+const content = document.querySelector('#content');
+const projectList = document.createElement('ul');
+projects.forEach(project => {
+    const todolist = document.createElement('ul');
+    const projName = document.createElement('li');
+    projName.textContent = project.name;
+    projName.classList.add('projName');
+    projectList.appendChild(projName);
+    project["toDoList"].forEach(element => {
+        const todo = document.createElement('li');
+        todo.textContent = element.title + ' Date: '+ element.dueDate; 
+        todolist.append(todo);
+    });
+    projectList.appeChild(todolist);
+});
+content.appendChild(projectList);
 
 
-const mytodo = new ToDo('Lavar','lavar la ropa', date,'high');
-const mytodo2 = new ToDo('Planchar','planchar la ropa', date,'high');
-const mytodo3 = new ToDo('Colgar','colgar la ropa', date,'high');
-const myProject = new Project('Tareas');
-myProject.addToDo(mytodo);
-myProject.addToDo(mytodo2);
-myProject.addToDo(mytodo3);
-console.log(myProject);
-myProject.deleteToDo(mytodo2);
-console.log(myProject.getToDoList());

@@ -1,0 +1,50 @@
+import {format } from "date-fns";
+import Project from "./project";
+import ToDo from "./toDo";
+
+function populateData() {
+  let projects = [];
+  let todos = [];
+
+  const actions = [
+    "do dishes",
+    "paint house",
+    "brush teeth",
+    "drive kids",
+    "do groceries",
+    "clean sheets",
+  ];
+
+
+  actions.forEach((element) => {
+    for (let index = 0; index < 3; index++) {
+      const mytodo = new ToDo(
+        element,
+        element,
+        randomDate(new Date(), new Date(2023, 9, 6)),
+        "high"
+      );
+      todos.push(mytodo);
+    }
+  });
+
+  const when = ["Today", "This Week", "This Month", "Next Month"];
+  when.forEach((element) => {
+    const myproj = new Project(element);
+    todos.forEach((todo) => {
+      myproj.addToDo(todo);
+    });
+    projects.push(myproj);
+  });
+
+  localStorage.setItem("projects", JSON.stringify(projects));
+  // localStorage.setItem("todos", JSON.stringify(todos));
+}
+
+function randomDate(start, end) {
+  return new Date(
+    start.getTime() + Math.random() * (end.getTime() - start.getTime())
+  );
+}
+
+export { populateData };
