@@ -1,0 +1,1 @@
+(()=>{"use strict";var e={};(e=>{"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})})(e);let t=[new Date(1990,5,12),new Date(1950,4,20),new Date(1924,8,22)];console.log(t.sort(e.compareAsc))})();
