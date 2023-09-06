@@ -1,13 +1,19 @@
-import { compareAsc, format } from 'date-fns/format';
+import { format } from "date-fns";
 
-export default class toDo {
+export default class ToDo {
+  constructor(title, description, dueDate, priority) {
+    this.title = title;
+    this.description = description;
+    this.dueDate = dueDate;
+    this.priority = priority;
+    this.checked = false;
+  }
 
-    constructor (title, description, dueDate, priority){
-        this.title = title;
-        this.description = description;
-        this.dueDate = dueDate;
-        this.priority = priority;
-    }
-
-
+  checkUncheck() {
+    this.checked ? (this.checked = false) : (this.checked = true);
+  }
+  getDueDate() {
+    let date = this.dueDate;
+    return format(date, "P");
+  }
 }

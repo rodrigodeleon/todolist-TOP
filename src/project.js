@@ -3,13 +3,21 @@ export default class Project {
     this.name = name;
     this.toDoList = [];
   }
-}
 
-export function getToDoList() {
-  return toDoList;
-}
+  getToDoList() {
+    return this.toDoList;
+  }
 
-export function addToDo(toDo)
-{
+  addToDo(toDo) {
     this.toDoList.push(toDo);
+  }
+
+  deleteToDo(toDoToDelete) {
+    this.toDoList.forEach((toDo) => {
+      if (toDo.title == toDoToDelete.title) {
+        let index = this.toDoList.indexOf(toDo);
+        this.toDoList.splice(index, 1);
+      }
+    });
+  }
 }

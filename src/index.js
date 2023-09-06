@@ -1,6 +1,17 @@
-import * as Project from './project';
-import * as toDo from './toDo';
-import { compareAsc, format } from 'date-fns/format';
+import {format} from 'date-fns';
+import Project from './project';
+import ToDo from './toDo';
 
-let dates = [new Date(1990,5,12),new Date(1950,4,20),new Date(1924,8,22)];
-console.log(dates.sort(compareAsc));
+const date = new Date (1990,5,12);
+
+
+const mytodo = new ToDo('Lavar','lavar la ropa', date,'high');
+const mytodo2 = new ToDo('Planchar','planchar la ropa', date,'high');
+const mytodo3 = new ToDo('Colgar','colgar la ropa', date,'high');
+const myProject = new Project('Tareas');
+myProject.addToDo(mytodo);
+myProject.addToDo(mytodo2);
+myProject.addToDo(mytodo3);
+console.log(myProject);
+myProject.deleteToDo(mytodo2);
+console.log(myProject.getToDoList());
