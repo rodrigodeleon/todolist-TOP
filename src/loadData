@@ -1,4 +1,4 @@
-import {format } from "date-fns";
+import { format } from "date-fns";
 import Project from "./project";
 import ToDo from "./toDo";
 
@@ -14,7 +14,6 @@ function populateData() {
     "do groceries",
     "clean sheets",
   ];
-
 
   actions.forEach((element) => {
     for (let index = 0; index < 3; index++) {
@@ -41,10 +40,31 @@ function populateData() {
   // localStorage.setItem("todos", JSON.stringify(todos));
 }
 
+export function loadAllProjects() {
+  
+  populateData();
+  const projects = JSON.parse(localStorage.getItem("projects"));
+  const projectList = document.createElement("ul");
+  projects.forEach((project) => {
+    const todolist = document.createElement("ul");
+    const projName = document.createElement("li");
+    projName.textContent = project.name;
+    projName.classList.add("projName");
+    projectList.appendChild(projName);
+    project["toDoList"].forEach((element) => {
+      const todo = document.createElement("li");
+      todo.textContent = element.title + " Date: " + element.dueDate;
+      todolist.append(todo);
+    });
+    projectList.appendChild(todolist);
+  });
+  return projectList;
+  //returns an ul with all projects and todos
+}
+
+
 function randomDate(start, end) {
   return new Date(
     start.getTime() + Math.random() * (end.getTime() - start.getTime())
   );
 }
-
-export { populateData };
