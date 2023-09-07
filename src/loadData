@@ -47,25 +47,61 @@ export function loadAllProjects() {
   projectList.classList.add("project");
   projects.forEach((project) => {
     const projectDiv = document.createElement("div");
-    const todolist = document.createElement("ul");
     const projName = document.createElement("li");
     projName.textContent = project.name;
     projName.classList.add("projName");
     projectDiv.appendChild(projName);
     var myarray = project["toDoList"];
-    project["toDoList"].forEach((element) => {
-      const todo = document.createElement("li");
-      todo.textContent = element.title.toUpperCase() + " Due Date: " + element.dueDate;
-      todolist.append(todo);
-    });
-    projectDiv.appendChild(todolist);
+    projectDiv.appendChild(loadTodos(myarray));
     projectList.appendChild(projectDiv);
   });
   return projectList;
   //returns an ul with all projects and todos
 }
 
-// projectList.sort((a, b) => a.dueDate - b.dueDate);
+function loadTodos(todoList) {
+  const todolist = document.createElement("ul");
+  todoList.forEach((element) => {
+    const todo = document.createElement("li");
+    todo.textContent =
+      " Task: " + element.title.toUpperCase() + " Due Date: " + element.dueDate;
+    todolist.append(todo);
+    const btnDetails = document.createElement("button");
+    btnDetails.classList.add("btnDetails");
+    btnDetails.setAttribute("id", todoList.indexOf(element));
+    btnDetails.textContent = "Details";
+    todolist.appendChild(btnDetails);
+    btnDetails.addEventListener("click", function () {
+      loadTodoDetail(element);
+    });
+  });
+  return todolist;
+}
+function loadTodoDetail(todo) {
+  console.log('create modal');
+  const content = document.querySelector('#content');
+  const modal = document.createElement("div");
+  modal.classList.add("modal");
+  
+  const closeButton = document.createElement("span");
+  closeButton.classList.add("close");
+  closeButton.innerHTML = "&times;";
+  
+  const modalText = document.createElement("ul");
+  modalText.classList.add("modalText");
+  Object.entries(todo).forEach(element => {
+    const line = document.createElement('li');
+    line.classList.add('modalLine');
+    line.textContent = `${element[0].toUpperCase()} : ${element[1]}`
+    modalText.append(line);
+  });
+
+  modal.append(modalText,closeButton);
+  closeButton.addEventListener("click", function () {
+    modal.style.display = "none";
+  });
+  content.append(modal);
+}
 
 function randomDate(start, end) {
   return new Date(
