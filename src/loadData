@@ -42,23 +42,14 @@ export function populateData() {
 
   localStorage.setItem("projects", JSON.stringify(projects));
 }
-const allprojects = JSON.parse(localStorage.getItem("projects"));
+let allprojects = JSON.parse(localStorage.getItem("projects"));
 
 export function loadMenu() {
+
   let projectSelector = document.createElement("select");
   projectSelector.setAttribute("id", "projectSelector");
-  let option1 = document.createElement("option");
-  option1.setAttribute("value", "all");
-  option1.textContent = "All";
-  projectSelector.appendChild(option1);
-  allprojects.forEach((project) => {
-    let optionX = document.createElement("option");
-    optionX.setAttribute("value", project.name);
-    optionX.classList.add('projectSelectorItem');
-    optionX.textContent = project.name;
-    projectSelector.appendChild(optionX);
-  });
-
+  actions.append("Projects: ",projectSelector);
+  updateProjectSelector("projectSelector");
   projectSelector.addEventListener("change", function () {
     if (projectSelector.value == "all") {
       const myvar = JSON.parse(localStorage.getItem("projects"));
@@ -69,17 +60,43 @@ export function loadMenu() {
       loadProjects(selectedProject);
     }
   });
-  actions.append('Projects: ' ,projectSelector);
+
+  const buttonNewProject = document.createElement("button");
+  buttonNewProject.classList.add("btnDetails");
+  buttonNewProject.textContent = "New Project";
+  buttonNewProject.addEventListener("click", function () {
+    projects.newProject(prompt("choose project name"));
+    allprojects = JSON.parse(localStorage.getItem("projects"));
+    updateProjectSelector("projectSelector");
+    loadProjects(allprojects);
+  });
+
+  actions.append(buttonNewProject);
   loadProjects(allprojects);
 }
 
+function updateProjectSelector(selectorHtmlLocationId) {
+  const projectSelector = document.querySelector(`#${selectorHtmlLocationId}`);
+  projectSelector.innerHTML = "";
+  let option1 = document.createElement("option");
+  option1.setAttribute("value", "all");
+  option1.textContent = "All";
+  projectSelector.appendChild(option1);
+  allprojects.forEach((project) => {
+    let optionX = document.createElement("option");
+    optionX.setAttribute("value", project.name);
+    optionX.textContent = project.name;
+    projectSelector.appendChild(optionX);
+  });
+}
 export function loadProjects(projects) {
   //returns an ul with all projects and its todos
 
   const projectList = document.createElement("ul");
-  projectList.classList.add("project");
+  projectList.classList.add("projectList");
   projects.forEach((project) => {
     const projectDiv = document.createElement("div");
+    projectDiv.classList.add("projectDiv");
     const projName = document.createElement("li");
     projName.textContent = project.name;
     projName.classList.add("projName");
@@ -99,8 +116,10 @@ function loadTodos(todoList) {
   todolist.classList.add("todoList");
   todoList.forEach((element) => {
     const todo = document.createElement("li");
-    todo.textContent =
-      " Task: " + element.title.toUpperCase() + " Due Date: " + element.dueDate;
+    todo.innerHTML = `Task: <br>${element.title.toUpperCase()}<br>Due Date: <br>${
+      element.dueDate
+    }`;
+    todo.classList.add("todoShortDescription");
     const btnDetails = document.createElement("button");
     btnDetails.classList.add("btnDetails");
     btnDetails.setAttribute("id", todoList.indexOf(element));
