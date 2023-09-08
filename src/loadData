@@ -49,11 +49,10 @@ export function loadMenu() {
   let projectSelector = document.createElement("select");
   projectSelector.setAttribute("id", "projectSelector");
   actions.append("Projects: ",projectSelector);
-  updateProjectSelector("projectSelector");
+  populateProjectSelector("projectSelector");
   projectSelector.addEventListener("change", function () {
     if (projectSelector.value == "all") {
       const myvar = JSON.parse(localStorage.getItem("projects"));
-
       loadProjects(myvar);
     } else {
       const selectedProject = projects.getProjectByName(projectSelector.value);
@@ -67,15 +66,25 @@ export function loadMenu() {
   buttonNewProject.addEventListener("click", function () {
     projects.newProject(prompt("choose project name"));
     allprojects = JSON.parse(localStorage.getItem("projects"));
-    updateProjectSelector("projectSelector");
+    populateProjectSelector("projectSelector");
     loadProjects(allprojects);
   });
 
-  actions.append(buttonNewProject);
+  const buttonNewTask = document.createElement("button");
+  buttonNewTask.classList.add("btnDetails");
+  buttonNewTask.textContent = "New Task";
+  buttonNewTask.addEventListener("click", function () {
+    newTask();
+    console.log('clicked');
+    
+  });
+
+
+  actions.append(buttonNewProject, buttonNewTask);
   loadProjects(allprojects);
 }
 
-function updateProjectSelector(selectorHtmlLocationId) {
+function populateProjectSelector(selectorHtmlLocationId) { //populates a targeted select item
   const projectSelector = document.querySelector(`#${selectorHtmlLocationId}`);
   projectSelector.innerHTML = "";
   let option1 = document.createElement("option");
@@ -89,6 +98,44 @@ function updateProjectSelector(selectorHtmlLocationId) {
     projectSelector.appendChild(optionX);
   });
 }
+
+function newTask (){
+
+  const taskModal = document.createElement("div");
+  taskModal.classList.add("modal");
+  taskModal.innerHTML = 'New Task';
+
+  const closeButton = document.createElement("span");
+  closeButton.classList.add("close");
+  closeButton.innerHTML = "&times;";
+  
+  
+  
+  const createTask = document.createElement("span");
+  createTask.classList.add("create");
+  createTask.innerHTML = "Create Task";
+  
+  taskModal.append(createTask, closeButton);
+  content.append(taskModal);
+
+  closeButton.addEventListener("click", function () {
+
+    taskModal.style.display = "none";
+  });
+
+  createTask.addEventListener("click", function () {
+
+    taskModal.style.display = "none";
+    allprojects = JSON.parse(localStorage.getItem("projects"));
+    loadProjects(allprojects);
+  });
+
+
+
+
+}
+
+
 export function loadProjects(projects) {
   //returns an ul with all projects and its todos
 
