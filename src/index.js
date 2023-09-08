@@ -1,7 +1,9 @@
-import { loadAllProjects , populateData} from "./loadData";
-import './style.css';
+import { loadMenu, populateData } from "./loadData";
+import "./style.css";
+import * as projects from "./project";
 
-const content = document.querySelector('#content');
+const content = document.querySelector("#content");
+const actions = document.querySelector("#actions");
+const allprojects = JSON.parse(localStorage.getItem("projects"));
 populateData();
-loadAllProjects();
-
+loadMenu();
