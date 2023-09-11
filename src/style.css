@@ -11,7 +11,8 @@ body {
   font-size: larger;
 }
 
-#projectSelector {
+#projectSelector 
+ {
   margin: 0 1rem;
   font-size: large;
   padding: 0.5rem;
@@ -107,4 +108,11 @@ body {
   color: yellowgreen;
   text-decoration: none;
   cursor: pointer;
+}
+
+.taskForm {
+  display: flex;
+  flex-direction: column;
+  padding:1rem;
+  gap: 1rem;
 }

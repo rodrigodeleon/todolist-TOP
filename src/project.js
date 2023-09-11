@@ -1,3 +1,4 @@
+import ToDo from "./toDo";
 export default class Project {
   constructor(name) {
     this.name = name;
@@ -35,12 +36,25 @@ export function deleteToDo(todotodelete, projectName) {
   localStorage.setItem("projects", JSON.stringify(projects));
 }
 export function newProject(projectName) {
-
   const projects = JSON.parse(localStorage.getItem("projects"));
   const myproj = new Project(projectName);
   projects.push(myproj);
   localStorage.setItem("projects", JSON.stringify(projects));
-  
-  
+}
 
+export function addTaskToProject(
+  taskTitle,
+  taskDescription,
+  taskDueDate,
+  taskProject
+) {
+  const task = new ToDo(taskTitle, taskDescription, taskDueDate);
+  const projects = JSON.parse(localStorage.getItem("projects"));
+  projects.forEach((element) => {
+    if (element.name == taskProject) {
+      element.toDoList.push(task);
+    }
+  });
+  localStorage.setItem("projects", JSON.stringify(projects));
+  return "task added";
 }

@@ -4,7 +4,8 @@ export default class ToDo {
   constructor(title, description, dueDate, priority) {
     this.title = title;
     this.description = description;
-    this.dueDate = format(dueDate, "P");
+    // this.dueDate = format(dueDate, "P");
+    this.dueDate = dueDate;
     this.priority = priority;
     this.checked = false;
   }
@@ -14,6 +15,8 @@ export default class ToDo {
   }
   getDueDate() {
     let date = this.dueDate;
-    return frmat(date, "P");
+    return format(date, "P");
   }
 }
+
+

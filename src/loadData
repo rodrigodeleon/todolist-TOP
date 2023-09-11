@@ -24,7 +24,7 @@ export function populateData() {
       const mytodo = new ToDo(
         element,
         element,
-        randomDate(new Date(), new Date(2023, 9, 6)),
+        format(randomDate(new Date(), new Date(2023, 9, 6)),"P"),
         "high"
       );
       todos.push(mytodo);
@@ -45,11 +45,10 @@ export function populateData() {
 let allprojects = JSON.parse(localStorage.getItem("projects"));
 
 export function loadMenu() {
-
   let projectSelector = document.createElement("select");
   projectSelector.setAttribute("id", "projectSelector");
-  actions.append("Projects: ",projectSelector);
-  populateProjectSelector("projectSelector");
+  populateProjectSelector(projectSelector);
+  actions.append("Projects: ", projectSelector);
   projectSelector.addEventListener("change", function () {
     if (projectSelector.value == "all") {
       const myvar = JSON.parse(localStorage.getItem("projects"));
@@ -66,7 +65,7 @@ export function loadMenu() {
   buttonNewProject.addEventListener("click", function () {
     projects.newProject(prompt("choose project name"));
     allprojects = JSON.parse(localStorage.getItem("projects"));
-    populateProjectSelector("projectSelector");
+    populateProjectSelector(projectSelector);
     loadProjects(allprojects);
   });
 
@@ -75,66 +74,100 @@ export function loadMenu() {
   buttonNewTask.textContent = "New Task";
   buttonNewTask.addEventListener("click", function () {
     newTask();
-    console.log('clicked');
-    
+    console.log("clicked");
   });
-
 
   actions.append(buttonNewProject, buttonNewTask);
   loadProjects(allprojects);
 }
 
-function populateProjectSelector(selectorHtmlLocationId) { //populates a targeted select item
-  const projectSelector = document.querySelector(`#${selectorHtmlLocationId}`);
-  projectSelector.innerHTML = "";
+function populateProjectSelector(selectorItem) {
+  selectorItem.innerHTML = "";
   let option1 = document.createElement("option");
   option1.setAttribute("value", "all");
   option1.textContent = "All";
-  projectSelector.appendChild(option1);
+  selectorItem.appendChild(option1);
   allprojects.forEach((project) => {
     let optionX = document.createElement("option");
     optionX.setAttribute("value", project.name);
     optionX.textContent = project.name;
-    projectSelector.appendChild(optionX);
+    selectorItem.appendChild(optionX);
   });
 }
 
-function newTask (){
 
+
+function newTask() {
   const taskModal = document.createElement("div");
   taskModal.classList.add("modal");
-  taskModal.innerHTML = 'New Task';
+  taskModal.innerHTML = "New Task";
+
+  const taskForm = newTaskForm();
+  taskForm.classList.add('taskForm');
+  taskModal.appendChild(taskForm);
 
   const closeButton = document.createElement("span");
   closeButton.classList.add("close");
   closeButton.innerHTML = "&times;";
-  
-  
-  
-  const createTask = document.createElement("span");
-  createTask.classList.add("create");
-  createTask.innerHTML = "Create Task";
-  
-  taskModal.append(createTask, closeButton);
+
+  const addTask = document.createElement("span");
+  addTask.classList.add("addtask");
+  addTask.innerHTML = "Add Task";
+
+  taskModal.append(addTask, closeButton);
   content.append(taskModal);
 
   closeButton.addEventListener("click", function () {
-
     taskModal.style.display = "none";
   });
 
-  createTask.addEventListener("click", function () {
-
+  addTask.addEventListener("click", function () {
+    const title = document.querySelector('#taskTitle');
+    const desc = document.querySelector('#taskDescription');
+    const dueDate = document.querySelector('#dueDate');
+    const project = document.querySelector('#taskProjectSelector');
+    projects.addTaskToProject(title.value, desc.value, dueDate.value, project.value );
     taskModal.style.display = "none";
     allprojects = JSON.parse(localStorage.getItem("projects"));
     loadProjects(allprojects);
   });
-
-
-
-
 }
 
+
+
+function newTaskForm() {
+  let myForm = document.createElement("form");
+  myForm.setAttribute("id", "taskForm");
+  let taskTitle = document.createElement("input");
+  taskTitle.setAttribute("type", "text");
+  taskTitle.setAttribute("id", "taskTitle");
+  taskTitle.setAttribute("placeholder", "Title");
+
+  let taskDescription = document.createElement("input");
+  taskDescription.setAttribute("type", "textarea");
+  taskDescription.setAttribute("id", "taskDescription");
+  taskDescription.setAttribute("placeholder", "Description");
+
+  let dueDate = document.createElement("input");
+  dueDate.setAttribute("type", "date");
+  dueDate.setAttribute("id", "dueDate");
+  dueDate.setAttribute("placeholder", "Due Date");
+  let dueDateLabel = document.createElement('label');
+  dueDateLabel.setAttribute('for','dueDate');
+  dueDateLabel.textContent = 'Due Date:';
+
+  let projectSelector = document.createElement('select');
+  projectSelector.setAttribute("id", "taskProjectSelector");
+  populateProjectSelector(projectSelector);
+  projectSelector.remove(0);
+  let projectLabel = document.createElement('label');
+  projectLabel.setAttribute('for','taskProjectSelector');
+  projectLabel.textContent = 'Project:';
+  
+  myForm.append(projectLabel, projectSelector, taskTitle, taskDescription,dueDateLabel, dueDate);
+
+  return myForm;
+}
 
 export function loadProjects(projects) {
   //returns an ul with all projects and its todos
