@@ -11,8 +11,7 @@ body {
   font-size: larger;
 }
 
-#projectSelector 
- {
+#projectSelector {
   margin: 0 1rem;
   font-size: large;
   padding: 0.5rem;
@@ -43,8 +42,8 @@ body {
   border-color: gray;
 }
 
-.projectDiv:last-child ul{
- border: none;
+.projectDiv:last-child ul {
+  border: none;
 }
 
 .todoShortDescription {
@@ -60,8 +59,8 @@ body {
   position: fixed;
   align-items: center;
   z-index: 1;
-  left: 20%;
-  top: 20%;
+  left: 25%;
+  top: 25%;
   width: fit-content;
   height: fit-content;
   overflow: auto;
@@ -101,11 +100,13 @@ body {
 
 .close:hover,
 .close:focus,
+.addtask:hover,
+.addtask:focus,
 .delete:hover,
 .delete:focus,
 .btnDetails:hover,
 .btnDetails:focus {
-  color: yellowgreen;
+  color: gold;
   text-decoration: none;
   cursor: pointer;
 }
@@ -113,6 +114,36 @@ body {
 .taskForm {
   display: flex;
   flex-direction: column;
-  padding:1rem;
-  gap: 1rem;
+  padding: 1rem 0 1.5rem 0;
+  gap: 0.3rem;
+}
+
+.taskForm * {
+  font-size: medium;
+  padding: 0.5rem;
+}
+
+#taskDescription {
+  width: fit-content;
+  height: 5rem;
+}
+
+
+#actions button {
+  font-size: large;
+  padding: 0.5rem 1rem;
+}
+
+.addtask {
+  text-align: center;
+  font-size: large;
+  margin-top: 1rem;
+  border-radius: 5px;
+  border-color: white;
+  border-style: solid;
+  border-width: 1px;
+}
+.actionModal {
+  top: 10%;
+  gap: 0;
 }

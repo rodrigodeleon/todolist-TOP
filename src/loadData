@@ -99,22 +99,23 @@ function populateProjectSelector(selectorItem) {
 
 function newTask() {
   const taskModal = document.createElement("div");
-  taskModal.classList.add("modal");
-  taskModal.innerHTML = "New Task";
+  taskModal.classList.add("modal","actionModal");
+  // taskModal.innerHTML = "New Task";
 
   const taskForm = newTaskForm();
   taskForm.classList.add('taskForm');
-  taskModal.appendChild(taskForm);
-
+  
   const closeButton = document.createElement("span");
   closeButton.classList.add("close");
   closeButton.innerHTML = "&times;";
-
+  
   const addTask = document.createElement("span");
   addTask.classList.add("addtask");
   addTask.innerHTML = "Add Task";
-
-  taskModal.append(addTask, closeButton);
+  
+  taskForm.appendChild(addTask);
+  taskModal.appendChild(taskForm);
+  taskModal.append(closeButton);
   content.append(taskModal);
 
   closeButton.addEventListener("click", function () {
