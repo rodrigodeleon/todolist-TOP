@@ -1,4 +1,5 @@
-import ToDo from "./toDo";
+import ToDo from './toDo';
+
 export default class Project {
   constructor(name) {
     this.name = name;
@@ -10,8 +11,8 @@ export default class Project {
   }
 }
 export function getProjectByName(projName) {
-  const projects = JSON.parse(localStorage.getItem("projects"));
-  let res = [];
+  const projects = JSON.parse(localStorage.getItem('projects'));
+  const res = [];
   projects.forEach((element) => {
     if (element.name == projName) {
       res.push(element);
@@ -21,7 +22,7 @@ export function getProjectByName(projName) {
 }
 
 export function deleteToDo(todotodelete, projectName) {
-  const projects = JSON.parse(localStorage.getItem("projects"));
+  const projects = JSON.parse(localStorage.getItem('projects'));
   projects.forEach((element) => {
     if (element.name == projectName) {
       element.toDoList.forEach((todo, index) => {
@@ -33,28 +34,28 @@ export function deleteToDo(todotodelete, projectName) {
       });
     }
   });
-  localStorage.setItem("projects", JSON.stringify(projects));
+  localStorage.setItem('projects', JSON.stringify(projects));
 }
 export function newProject(projectName) {
-  const projects = JSON.parse(localStorage.getItem("projects"));
+  const projects = JSON.parse(localStorage.getItem('projects'));
   const myproj = new Project(projectName);
   projects.push(myproj);
-  localStorage.setItem("projects", JSON.stringify(projects));
+  localStorage.setItem('projects', JSON.stringify(projects));
 }
 
 export function addTaskToProject(
   taskTitle,
   taskDescription,
   taskDueDate,
-  taskProject
+  taskProject,
 ) {
   const task = new ToDo(taskTitle, taskDescription, taskDueDate);
-  const projects = JSON.parse(localStorage.getItem("projects"));
+  const projects = JSON.parse(localStorage.getItem('projects'));
   projects.forEach((element) => {
     if (element.name == taskProject) {
       element.toDoList.push(task);
     }
   });
-  localStorage.setItem("projects", JSON.stringify(projects));
-  return "task added";
+  localStorage.setItem('projects', JSON.stringify(projects));
+  return 'task added';
 }
