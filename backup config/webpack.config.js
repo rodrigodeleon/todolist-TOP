@@ -9,11 +9,11 @@ module.exports = {
     path: path.resolve(__dirname, "dist"),
   },
   devtool: "inline-source-map",
-  cache : false,
+  cache: false,
   plugins: [
     new HtmlWebpackPlugin({
       title: "Development",
-      template : './dist/index.html',
+      template: "./dist/index.html",
     }),
   ],
   module: {

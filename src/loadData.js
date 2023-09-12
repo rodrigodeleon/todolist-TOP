@@ -9,7 +9,7 @@ const actions = document.querySelector('#actions');
 export function populateData() {
   // create projects/todos and loads them on localStorage
   const projects = [];
-  const todos = [];
+  const todos = []; 
 
   const actions = [
     'Do dishes',
@@ -126,7 +126,12 @@ function newTask() {
     const desc = document.querySelector('#taskDescription');
     const dueDate = document.querySelector('#dueDate');
     const project = document.querySelector('#taskProjectSelector');
-    projects.addTaskToProject(title.value, desc.value, dueDate.value, project.value);
+    projects.addTaskToProject(
+      title.value,
+      desc.value,
+      dueDate.value,
+      project.value,
+    );
     taskModal.style.display = 'none';
     allprojects = JSON.parse(localStorage.getItem('projects'));
     loadProjects(allprojects);
@@ -162,7 +167,14 @@ function newTaskForm() {
   projectLabel.setAttribute('for', 'taskProjectSelector');
   projectLabel.textContent = 'Project:';
 
-  myForm.append(projectLabel, projectSelector, taskTitle, taskDescription, dueDateLabel, dueDate);
+  myForm.append(
+    projectLabel,
+    projectSelector,
+    taskTitle,
+    taskDescription,
+    dueDateLabel,
+    dueDate,
+  );
 
   return myForm;
 }

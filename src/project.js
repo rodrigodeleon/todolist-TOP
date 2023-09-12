@@ -14,7 +14,7 @@ export function getProjectByName(projName) {
   const projects = JSON.parse(localStorage.getItem('projects'));
   const res = [];
   projects.forEach((element) => {
-    if (element.name == projName) {
+    if (element.name === projName) {
       res.push(element);
     }
   });
@@ -24,9 +24,9 @@ export function getProjectByName(projName) {
 export function deleteToDo(todotodelete, projectName) {
   const projects = JSON.parse(localStorage.getItem('projects'));
   projects.forEach((element) => {
-    if (element.name == projectName) {
+    if (element.name === projectName) {
       element.toDoList.forEach((todo, index) => {
-        if (todo.title == todotodelete) {
+        if (todo.title === todotodelete) {
           console.table(element.toDoList);
           element.toDoList.splice(index, 1);
           console.table(element.toDoList);
@@ -52,7 +52,7 @@ export function addTaskToProject(
   const task = new ToDo(taskTitle, taskDescription, taskDueDate);
   const projects = JSON.parse(localStorage.getItem('projects'));
   projects.forEach((element) => {
-    if (element.name == taskProject) {
+    if (element.name === taskProject) {
       element.toDoList.push(task);
     }
   });
